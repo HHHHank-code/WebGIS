@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>福建省人均GDP历年变化</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/css/main.css">
-    <script src="https://js.arcgis.com/4.29/"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/5.0/esri/css/main.css">
+    <script src="https://js.arcgis.com/5.0/"></script>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; }
         .header {
@@ -55,7 +55,6 @@
 require(["esri/config", "esri/intl"], function(esriConfig, intl) {
     esriConfig.apiKey = "AAPTaD42n91GnFugyw1_ACxh5xQ..ReLe6bVgv_hA_2k2lTiNGn62r5Ms9KREBupZPCTLKW0xjP3U9dZk5tOLR-s__6XgXYFAX18M6rGQKh_kAn-ZRfmRkH2sA_SsSmceIemjQhVgkP1j_mnBH5ZLbHp9rmgpONcZYA-Wqff1pu-7u1-dUcmzicovLCoLfBcapubys-S5FOFK1bC8Cvgx5Ba7IZeY5X40NFO0Oguvz006ZMeNKwzwzH-xDHipDF_HSKKdFaoDTn1_ewRPSuY.AT1_oWLWI3ZM";
     
-    // 修复字体404所有报错
     intl.setLocale("zh-CN");
     esriConfig.fontFamily = '"Microsoft YaHei", sans-serif';
 });
@@ -74,7 +73,7 @@ require([
     BasemapGallery, ScaleBar, Legend, Search, LayerList
 ) {
     const map = new Map({
-        basemap: "streets-vector" // 默认高清矢量街道底图
+        basemap: "streets-vector"
     });
 
     const view = new MapView({
@@ -86,7 +85,7 @@ require([
 
     const fujianLayer = new FeatureLayer({
         url: "https://www.geosceneonline.cn/server/rest/services/Hosted/福建人均GDP历年变化_要素/FeatureServer",
-        title: "福建人均GDP历年变化-2023年数据",
+        title: "福建人均GDP历年变化",
         opacity: 0.85
     });
     map.add(fujianLayer);
@@ -97,11 +96,10 @@ require([
         view.ui.add(new Search({ view: view }), "top-right");
         view.ui.add(new LayerList({ view: view }), "top-left");
 
-        // 核心修复：强制加载ArcGIS官方全套底图，本地localhost完美兼容
+        // ArcGIS 5.0 官方完整在线底图库
         new BasemapGallery({
             view: view,
             container: "basemapGalleryDiv",
-            // 官方公开底图合集，街道/卫星/地形/浅色/深色全中文可选
             source: "arcgis-online"
         });
     });
