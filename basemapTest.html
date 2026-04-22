@@ -1,0 +1,41 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>ArcGIS Maps SDK for JavaScript Tutorials: Display a map</title>
+
+
+
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    /* 让地图组件占满全屏 */
+    arcgis-map {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+
+  <script>
+    var esriConfig = {
+      apiKey: "AAPTadoPhv7nCuaS-vYiepIPVZQ..Emyk_6N-35l6YcywsRBAF74qXQYfIMht8Ouo30vWgoxLTY3VHqZ1AQV826WYH4tlJiHtGmRH_1heR7VsWPVJWA5gDb3fsix9j78NrOZOJeRaMnSe0NXk0hgnnlGs8XiEQJ8N5lrtrG35RsDXLLi7xUcqVxbKJbqOhB2t_AqySaz7SSxhhdhv4oRvY9SYp1-D_hvWlpi-8G2rnRYohxgdbBkuFeXGcS0k7RlVhEBlWosz4qhojLZV_g..AT1_oWLWI3ZM",
+    };
+  </script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript from CDN -->
+  <script type="module" src="https://js.arcgis.com/5.0/"></script>
+
+</head>
+
+<body>
+  <arcgis-map basemap="arcgis/topographic" center="-118.805, 34.020" zoom="13">
+    <arcgis-zoom slot="top-left"></arcgis-zoom>
+  </arcgis-map>
+</body>
+
+</html>
