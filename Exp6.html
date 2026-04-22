@@ -47,7 +47,7 @@
 <div class="container">
     <div id="viewDiv"></div>
     <div id="basemapGalleryDiv">
-        <div class="panel-title">底图选择</div>
+        <div class="panel-title">底图库(切换为卫星影像底图)</div>
     </div>
 </div>
 
@@ -97,7 +97,7 @@ require([
         view.ui.add(new Search({ view: view }), "top-right");
         view.ui.add(new LayerList({ view: view }), "top-left");
 
-        // 修复底图切换：街道 + 卫星，无图标报错
+        // 底图切换
         new BasemapGallery({
             view: view,
             container: "basemapGalleryDiv"
