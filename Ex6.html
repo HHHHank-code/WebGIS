@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>福建省人均GDP历年变化</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.29/"></script>
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; }
+        .header {
+            height: 60px;
+            background: #0079c2;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            height: calc(100% - 60px);
+        }
+        #viewDiv { flex: 1; }
+        #basemapGalleryDiv {
+            width: 280px;
+            background: #f7f7f7;
+            border-left: 1px solid #ddd;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .panel-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">福建省人均GDP历年变化专题地图</div>
+<div class="container">
+    <div id="viewDiv"></div>
+    <div id="basemapGalleryDiv">
+        <div class="panel-title">底图选择</div>
+    </div>
+</div>
+
+<script>
+require(["esri/config", "esri/intl"], function(esriConfig, intl) {
+    esriConfig.apiKey = "AAPTaD42n91GnFugyw1_ACxh5xQ..ReLe6bVgv_hA_2k2lTiNGn62r5Ms9KREBupZPCTLKW0xjP3U9dZk5tOLR-s__6XgXYFAX18M6rGQKh_kAn-ZRfmRkH2sA_SsSmceIemjQhVgkP1j_mnBH5ZLbHp9rmgpONcZYA-Wqff1pu-7u1-dUcmzicovLCoLfBcapubys-S5FOFK1bC8Cvgx5Ba7IZeY5X40NFO0Oguvz006ZMeNKwzwzH-xDHipDF_HSKKdFaoDTn1_ewRPSuY.AT1_oWLWI3ZM";
+    
+    // 修复字体404所有报错
+    intl.setLocale("zh-CN");
+    esriConfig.fontFamily = '"Microsoft YaHei", sans-serif';
+});
+
+require([
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/layers/FeatureLayer",
+    "esri/widgets/BasemapGallery",
+    "esri/widgets/ScaleBar",
+    "esri/widgets/Legend",
+    "esri/widgets/Search",
+    "esri/widgets/LayerList"
+], function(
+    Map, MapView, FeatureLayer,
+    BasemapGallery, ScaleBar, Legend, Search, LayerList
+) {
+    const map = new Map({
+        basemap: "streets-vector" // 默认高清矢量街道底图
+    });
+
+    const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [118.2, 26.0],
+        zoom: 7
+    });
+
+    const fujianLayer = new FeatureLayer({
+        url: "https://www.geosceneonline.cn/server/rest/services/Hosted/福建人均GDP历年变化_要素/FeatureServer",
+        title: "福建人均GDP历年变化-2023年数据",
+        opacity: 0.85
+    });
+    map.add(fujianLayer);
+
+    view.when(() => {
+        view.ui.add(new ScaleBar({ view: view }), "bottom-left");
+        view.ui.add(new Legend({ view: view }), "bottom-right");
+        view.ui.add(new Search({ view: view }), "top-right");
+        view.ui.add(new LayerList({ view: view }), "top-left");
+
+        // 核心修复：强制加载ArcGIS官方全套底图，本地localhost完美兼容
+        new BasemapGallery({
+            view: view,
+            container: "basemapGalleryDiv",
+            // 官方公开底图合集，街道/卫星/地形/浅色/深色全中文可选
+            source: "arcgis-online"
+        });
+    });
+});
+</script>
+</body>
+</html>
